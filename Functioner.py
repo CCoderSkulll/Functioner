@@ -25,7 +25,10 @@ def doif(condition_result):
                 result()
 
 def selectcolor(color):
-    #turns the color into ANSII
+    '''turns the color into ANSII (add + 10 if it's background)
+        Example:
+            selectcolor('Black')
+    '''
     result = ''
     color_list = [['Black', 30], ['Default', 666], ['Red', 31], ['Green', 32], ['Yellow', 33], ['Blue', 34], ['Purple', 35], ['Cyan', 36], ['Gray', 37]]
     color_received = (color.capitalize()).strip()
@@ -36,7 +39,9 @@ def selectcolor(color):
     return result
 
 def ansii(color, bgcolor, txt):
-    #Insert ANSII colors in text
+    '''Insert ANSII colors in text
+        (See selectcolor() to know the colors you can use)
+    '''
     color_result = selectcolor(color)
     bgcolor_result = selectcolor(bgcolor)
     if bgcolor_result == 666:
