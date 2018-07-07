@@ -1,10 +1,19 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+#!/usr/bin/python3
+# -*- coding: utf-8 -*-
+
 def name():
     return __name__
 
 def doif(condition_result):
+    ''' Example:
+            doif([condition, function, value of the function])
+        
+        you can add multiple functions like that:
+            doif([[condition, function, value of the function], [condition, function, value of the function], [condition, function, value of the function]])
+    '''
     for i in range(0, len(condition_result)):
         if condition_result[i][0]==True:
             condition=condition_result[i][0]
