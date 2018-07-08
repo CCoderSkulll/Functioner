@@ -56,7 +56,32 @@ def ClearConsole():
     import os
     os.system(['clear','cls'][os.name == 'nt'])
 
-
+def src(TypeSrc, src):
+    '''
+        Types{
+            "web" (Website search);
+            "yt" (Youtube search);
+            "gg" (Google search);
+        }
+    '''
+    
+    import webbrowser
+    src_configured = src.strip()
+    src_types = [['web', 'https://', ''], ['yt', 'https://www.youtube.com/results?search_query=', '+'], ['gg', 'https://www.google.com/#q=', '+']]
+    for i in range(0, len(src_types)):
+        if TypeSrc == src_types[i][0]:
+            url=src_types[i][1]
+            ind = i
+    for i in range(0, len(src_configured)):
+        if src_configured[i]==' ':
+            url+=src_types[ind][2]
+        if src_configured[i]!=' ':
+            url+=src_configured[i]
+    url=url.strip()
+    webbrowser.open(url)
 if name() == '__main__':
     ClearConsole()
     print(ansii('Black', 'Red', 'This script needs to be imported, not executed! '))
+
+
+        
