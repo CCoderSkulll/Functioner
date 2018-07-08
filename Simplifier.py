@@ -86,6 +86,3 @@ if name() == '__main__':
     #If the script is executed, do that:
     ClearConsole()
     print(ansii('Black', 'Red', 'This script needs to be imported, not executed! '))
-
-
-        
