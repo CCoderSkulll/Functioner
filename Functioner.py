@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 def name():
+    #Just a function to simplify __name__ to name()
     return __name__
 
 def doif(condition_result):
@@ -22,9 +23,12 @@ def doif(condition_result):
                 result()
 
 def selectcolor(color):
-    '''turns the color into ANSII (add + 10 if it's background)
+    '''turns the color into ANSII numbers (add + 10 if it's background)
         Example:
             selectcolor('Black')
+        
+        --Remember--
+            if you want a text with ANSII, see the ansii function.
     '''
     result = ''
     color_list = [['Black', 30], ['Default', 666], ['Red', 31], ['Green', 32], ['Yellow', 33], ['Blue', 34], ['Purple', 35], ['Cyan', 36], ['Gray', 37]]
@@ -38,7 +42,7 @@ def selectcolor(color):
 def ansii(color, bgcolor, txt):
     '''Insert ANSII colors in text
         (See selectcolor() to know the colors you can use)
-    '''
+    '''    
     color_result = selectcolor(color)
     bgcolor_result = selectcolor(bgcolor)
     if bgcolor_result == 666:
@@ -58,13 +62,12 @@ def ClearConsole():
 
 def src(TypeSrc, src):
     '''
-        Types{
+        Types of search{
             "web" (Website search);
             "yt" (Youtube search);
             "gg" (Google search);
         }
     '''
-    
     import webbrowser
     src_configured = src.strip()
     src_types = [['web', 'https://', ''], ['yt', 'https://www.youtube.com/results?search_query=', '+'], ['gg', 'https://www.google.com/#q=', '+']]
@@ -80,6 +83,7 @@ def src(TypeSrc, src):
     url=url.strip()
     webbrowser.open(url)
 if name() == '__main__':
+    #If the script is executed, do that:
     ClearConsole()
     print(ansii('Black', 'Red', 'This script needs to be imported, not executed! '))
 
