@@ -4,10 +4,6 @@
 import tkinter
 import os
 
-def name():
-    #Just a function to simplify __name__ to name()
-    return __name__
-
 def doif(condition_result):
     ''' Example:
             doif([condition, function, value of the function])
@@ -110,7 +106,7 @@ class MiniWindow:
     def reset(self):
         self.window.destroy()
         self.__init__()
-if name() == '__main__':
+if __name__ == '__main__':
     #If the script is executed, do that:
     ClearConsole()
     print(ansii('Black', 'Red', 'This script needs to be imported, not executed! '))
