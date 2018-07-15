@@ -1,6 +1,9 @@
 #!/usr/bin/python3
 # -*- coding: utf-8 -*-
 
+import tkinter
+import os
+
 def name():
     #Just a function to simplify __name__ to name()
     return __name__
@@ -57,7 +60,6 @@ def dialog(name, txt):
 
 def ClearConsole():
     #Clear the Python console
-    import os
     os.system(['clear','cls'][os.name == 'nt'])
 
 def src(TypeSrc, src):
@@ -82,6 +84,32 @@ def src(TypeSrc, src):
             url+=src_configured[i]
     url=url.strip()
     webbrowser.open(url)
+class MiniWindow:
+    def __init__(self):
+        self.window = tkinter.Tk()
+        self.window.geometry('550x130+450+280')
+    def InterfaceInput(self, txt):
+        self.txt = str(txt)
+        self.reset()
+        self.answer = tkinter.Entry(self.window, width=30)
+        question = tkinter.Label(self.window, width=20, text=str(self.txt))
+        confirm_button = tkinter.Button(self.window, width=20, text="Ok", command=self.Capture_Input)
+        question.pack()
+        self.answer.pack()
+        self.answer.focus()
+        confirm_button.pack()
+        self.window.protocol("WM_DELETE_WINDOW", self.Repeat_Input)
+        self.window.resizable(False, False)
+        self.window.mainloop() 
+        return self.final_answer
+    def Repeat_Input(self):
+        self.InterfaceInput(self.txt)
+    def Capture_Input(self):
+        self.final_answer = (self.answer).get()
+        self.window.quit()
+    def reset(self):
+        self.window.destroy()
+        self.__init__()
 if name() == '__main__':
     #If the script is executed, do that:
     ClearConsole()
