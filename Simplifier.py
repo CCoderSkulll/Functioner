@@ -3,13 +3,15 @@
 
 import tkinter
 import os
+import time
+import random
 
-def doif(condition_result):
+def doIf(condition_result):
     ''' Example:
-            doif([condition, function, value of the function])
+            doIf([condition, function, value of the function])
         
         you can add multiple functions like that:
-            doif([[condition, function, value of the function], [condition, function, value of the function], [condition, function, value of the function]])
+            doIf([[condition, function, value of the function], [condition, function, value of the function], [condition, function, value of the function]])
     '''
     for i in range(0, len(condition_result)):
         if condition_result[i][0]==True:
@@ -21,10 +23,10 @@ def doif(condition_result):
             if value=='NoneValue':
                 result()
 
-def selectcolor(color):
+def selectColor(color):
     '''turns the color into ANSII numbers (add + 10 if it's background)
         Example:
-            selectcolor('Black')
+            selectColor('Black')
         
         --Remember--
             if you want a text with ANSII, see the ansii function.
@@ -40,10 +42,10 @@ def selectcolor(color):
 
 def ansii(color, bgcolor, txt):
     '''Insert ANSII colors in text
-        (See selectcolor() to know the colors you can use)
+        (See selectColor() to know the colors you can use)
     '''    
-    color_result = selectcolor(color)
-    bgcolor_result = selectcolor(bgcolor)
+    color_result = selectColor(color)
+    bgcolor_result = selectColor(bgcolor)
     if bgcolor_result == 666:
             bgcolor_result = ''
     if bgcolor_result != '':
@@ -60,11 +62,11 @@ def ClearConsole():
 
 def src(TypeSrc, src):
     '''
-        Types of search{
-            "web" (Website search);
-            "yt" (Youtube search);
-            "gg" (Google search);
-        }
+        Types of search = [
+            "web" (Website search),
+            "yt" (Youtube search),
+            "gg" (Google search),
+        ]
     '''
     import webbrowser
     src_configured = src.strip()
@@ -80,33 +82,95 @@ def src(TypeSrc, src):
             url+=src_configured[i]
     url=url.strip()
     webbrowser.open(url)
+
+def splitWords(txt, exceptions):
+    #Splits the words of the given text
+    '''If you want to disconsider some kind of letter,
+        put them in the exceptions.
+    '''
+    txt = (str(txt)).strip()+' '
+    words = []
+    word_to_add=''
+    for i in txt:
+        if i==' ':
+            words.append(word_to_add)
+            word_to_add=''
+        else:
+            if not i in exceptions or exceptions=='none':    
+                word_to_add+=i
+    return words
+
+def breakLine(txt):
+    #Automatically break the lines
+    splitted_txt = splitWords(txt, 'none')
+    quant_words = 0
+    text=''
+    for word in splitted_txt:
+        quant_words += 1
+        text += ' {}'.format(word)
+        if len(word)>10 or quant_words%3==0:
+            text+='\n'  
+    return text
+
+def printClearing(txt):
+    #Clear the Console while printing the txt
+    ClearConsole()
+    sentence = ''
+    for i in txt:
+        time.sleep((random.randint(0, 3))/15)
+        ClearConsole()
+        sentence += i
+        print(sentence)
+
+def doNothing():
+    pass
+
 class MiniWindow:
     def __init__(self):
         self.window = tkinter.Tk()
         self.window.geometry('550x130+450+280')
-    def InterfaceInput(self, txt):
-        self.txt = str(txt)
+        #Using the doNothing function:
+        self.window.protocol('WM_DELETE_WINDOW', doNothing)
+        self.window.resizable(False, False)
+    def interfaceInput(self, txt):
+        #Use this method to receive an input using a GUI
         self.reset()
+        self.txt = breakLine(str(txt))
         self.answer = tkinter.Entry(self.window, width=30)
         question = tkinter.Label(self.window, width=20, text=str(self.txt))
-        confirm_button = tkinter.Button(self.window, width=20, text="Ok", command=self.Capture_Input)
+        confirm_button = tkinter.Button(self.window, width=20, text="Ok", command=self.captureInput)
         question.pack()
         self.answer.pack()
         self.answer.focus()
         confirm_button.pack()
-        self.window.protocol("WM_DELETE_WINDOW", self.Repeat_Input)
-        self.window.resizable(False, False)
         self.window.mainloop() 
         return self.final_answer
-    def Repeat_Input(self):
-        self.InterfaceInput(self.txt)
-    def Capture_Input(self):
+    def info(self, txt):
+        '''Use this method if you want to give some information
+        to the user'''
+        self.reset()
+        time.sleep(0.1)
+        self.txt = breakLine(str(txt))
+        info = tkinter.Label(self.window, text=self.txt)
+        confirm_button = tkinter.Button(self.window, text="Ok.", command=self.window.quit)
+        info.pack()
+        confirm_button.pack()
+        self.window.mainloop()
+    #-----------------------------------------------------------
+    '''These are methods that the code uses, you can use them,
+        but they aren't too useful for you.
+    '''
+    def captureInput(self):
         self.final_answer = (self.answer).get()
         self.window.quit()
     def reset(self):
         self.window.destroy()
         self.__init__()
+
 if __name__ == '__main__':
     #If the script is executed, do that:
     ClearConsole()
-    print(ansii('Black', 'Red', 'This script needs to be imported, not executed! '))
+    printClearing(ansii('Black', 'Red', 'This script needs to be imported, not executed!\n-- Press enter to continue -- '))
+    key = input('\033[0;{};{}m'.format(selectColor('Red'), selectColor('Red')+10))
+    print('\033[m')
+    ClearConsole()
