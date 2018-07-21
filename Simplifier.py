@@ -61,27 +61,30 @@ def ClearConsole():
     os.system(['clear','cls'][os.name == 'nt'])
 
 def src(TypeSrc, src):
-    '''
-        Types of search = [
-            "web" (Website search),
-            "yt" (Youtube search),
-            "gg" (Google search),
+    #Search on the web with this function!
+    search_types = [
+            "web",
+            "yt",
+            "gg",
         ]
-    '''
-    import webbrowser
-    src_configured = src.strip()
-    src_types = [['web', 'https://', ''], ['yt', 'https://www.youtube.com/results?search_query=', '+'], ['gg', 'https://www.google.com/#q=', '+']]
-    for i in range(0, len(src_types)):
-        if TypeSrc == src_types[i][0]:
-            url=src_types[i][1]
-            ind = i
-    for i in range(0, len(src_configured)):
-        if src_configured[i]==' ':
-            url+=src_types[ind][2]
-        if src_configured[i]!=' ':
-            url+=src_configured[i]
-    url=url.strip()
-    webbrowser.open(url)
+    if TypeSrc in search_types:
+        import webbrowser
+        src_configured = src.strip()
+        src_types = [['web', 'https://', ''], ['yt', 'https://www.youtube.com/results?search_query=', '+'], ['gg', 'https://www.google.com/search?q=', '+']]
+        for i in range(0, len(src_types)):
+            if TypeSrc == src_types[i][0]:
+                url=src_types[i][1]
+                ind = i
+        for i in range(0, len(src_configured)):
+            if src_configured[i]==' ':
+                url+=src_types[ind][2]
+            if src_configured[i]!=' ':
+                url+=src_configured[i]
+        url=url.strip()
+        webbrowser.open(url)
+    else:
+        print('Invalid type of search! ')
+        print('Only these are valids: {}!'.format(search_types))
 
 def splitWords(txt, exceptions):
     #Splits the words of the given text
@@ -162,10 +165,12 @@ class MiniWindow:
     '''
     def captureInput(self):
         self.final_answer = (self.answer).get()
-        self.window.quit()
+        self.quit()
     def reset(self):
         self.window.destroy()
         self.__init__()
+    def quit(self):
+        self.window.quit()
 
 if __name__ == '__main__':
     #If the script is executed, do that:
