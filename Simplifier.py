@@ -18,9 +18,9 @@ def doIf(condition_result):
             condition=condition_result[i][0]
             result=condition_result[i][1]
             value=condition_result[i][2]
-            if value!='NoneValue':
+            if value!='noneValue':
                 result(value)
-            if value=='NoneValue':
+            if value=='noneValue':
                 result()
 
 def selectColor(color):
@@ -56,7 +56,7 @@ def dialog(name, txt):
     #Simulates a dialog, like "Matt: Hi!"
     print('{}: {}'.format(name, txt))
 
-def ClearConsole():
+def clearConsole():
     #Clear the Python console
     os.system(['clear','cls'][os.name == 'nt'])
 
